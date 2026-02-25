@@ -2,16 +2,22 @@ package events
 
 import (
 	"context"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"math/big"
 	"os"
+	"strconv"
 	"strings"
+
+	cosmos "bridge_betme/cosmos"
+	helper "bridge_betme/helper"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -113,6 +119,46 @@ func Listener() {
 				log.Println("CosmosRecipient:", data.CosmosRecipient)
 				log.Println("Amount:", data.Amount)
 				log.Println("Nonce:", data.Nonce)
+
+				bridgeAddr := common.HexToAddress(os.Getenv("BRIDGE_ADDRESS"))
+				evmChainID := os.Getenv("EVM_CHAIN_ID")
+				evmChainIDnum, err := strconv.ParseUint(evmChainID, 10, 64)
+				if err != nil {
+					log.Println("parse EVM_CHAIN_ID:", err)
+				}
+
+				claim := helper.Claim{
+					EvmChainId:     evmChainIDnum, // Polygon Amoy
+					EvmBridge:      bridgeAddr,
+					EvmToken:       token,
+					EvmSender:      sender,
+					CosmosReceiver: data.CosmosRecipient,
+					Amount:         data.Amount,
+					Nonce:          data.Nonce.Uint64(),
+					TxHash:         vLog.TxHash,
+				}
+
+				hash := helper.HashClaim(claim)
+
+				log.Println("Claim hash:", common.BytesToHash(hash).Hex())
+
+				// ---- SIGN ----
+
+				privateKeyHex := os.Getenv("RELAYER_EVM_PRIVATE_KEY")
+				pk, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyHex, "0x"))
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				signature, err := helper.SignClaim(hash, pk)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				log.Println("Signature:", hex.EncodeToString(signature))
+
+				cosmos.SendToCosmos(claim, signature)
+
 			}
 		}
 	}()
