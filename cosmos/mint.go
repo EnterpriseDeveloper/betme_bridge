@@ -2,6 +2,7 @@ package cosmos
 
 import (
 	helper "bridge_betme/helper"
+	proto "bridge_betme/proto"
 	"context"
 	"log"
 	"os"
@@ -19,7 +20,7 @@ import (
 func SendToCosmos(claim helper.Claim, signature []byte) {
 	privKey, fromAddr := GetCosmosRelayerAddress()
 
-	msg := &MsgMintFromEvm{
+	msg := &proto.MsgMintFromEvm{
 		Creator:        fromAddr.String(),
 		EvmChainId:     claim.EvmChainId,
 		EvmBridge:      claim.EvmBridge.Hex(),

@@ -1,6 +1,7 @@
 package cosmos
 
 import (
+	proto "bridge_betme/proto"
 	"log"
 	"os"
 
@@ -53,7 +54,7 @@ func MakeEncodingConfig() EncodingConfig {
 
 	std.RegisterInterfaces(interfaceRegistry)
 
-	RegisterInterfaces(interfaceRegistry)
+	proto.RegisterInterfaces(interfaceRegistry)
 
 	protoCodec := codec.NewProtoCodec(interfaceRegistry)
 
