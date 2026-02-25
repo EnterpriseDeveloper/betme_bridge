@@ -33,7 +33,6 @@ func SendToCosmos(claim helper.Claim, signature []byte) {
 		Signatures:     [][]byte{signature},
 	}
 
-	// --- gRPC подключение ---
 	conn, err := grpc.NewClient(
 		os.Getenv("COSMOS_GRPC_URL"),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
@@ -43,7 +42,6 @@ func SendToCosmos(claim helper.Claim, signature []byte) {
 	}
 	defer conn.Close()
 
-	// --- получаем account number и sequence ---
 	authClient := authtypes.NewQueryClient(conn)
 
 	accRes, err := authClient.Account(
@@ -74,7 +72,7 @@ func SendToCosmos(claim helper.Claim, signature []byte) {
 		log.Fatal(err)
 	}
 
-	txBuilder.SetGasLimit(500000)
+	txBuilder.SetGasLimit(500000) // TODO: change
 
 	signMode := signingtypes.SignMode_SIGN_MODE_DIRECT
 

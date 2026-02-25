@@ -4,7 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	events "bridge_betme/events"
+	cosmos "bridge_betme/cosmos"
+	evm "bridge_betme/evm"
 	"bridge_betme/helper"
 
 	"github.com/joho/godotenv"
@@ -20,7 +21,8 @@ func main() {
 	}
 	helper.Init()
 	// --- RPC server ---
-	go events.Listener()
+	go evm.Listener()
+	go cosmos.StartCosmosListener()
 	// --- HTTP server ---
 	e := echo.New()
 	e.Use(middleware.RequestLogger())

@@ -1,4 +1,4 @@
-package events
+package evm
 
 import (
 	"context"
@@ -63,7 +63,7 @@ const bridgeABI = `[
 ]`
 
 func Listener() {
-	fmt.Println("Start listening...")
+	fmt.Println("Start listening EVM...")
 
 	rpcURL := os.Getenv("RPC_WS_URL")
 	bridgeAddress := common.HexToAddress(os.Getenv("BRIDGE_ADDRESS"))
