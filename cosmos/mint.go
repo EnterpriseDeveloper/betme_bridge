@@ -2,10 +2,17 @@ package cosmos
 
 import (
 	helper "bridge_betme/helper"
+	"context"
 	"log"
 	"os"
 
-	"github.com/cosmos/cosmos-sdk/client"
+	txtypes "github.com/cosmos/cosmos-sdk/types/tx"
+	signingtypes "github.com/cosmos/cosmos-sdk/types/tx/signing"
+	authsigning "github.com/cosmos/cosmos-sdk/x/auth/signing"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+
 	"github.com/cosmos/cosmos-sdk/client/tx"
 )
 
@@ -25,36 +32,109 @@ func SendToCosmos(claim helper.Claim, signature []byte) {
 		Signatures:     [][]byte{signature},
 	}
 
-	txConfig := MakeEncodingConfig()
-	// --- создаём keyring из mnemonic ---
-	kr := BuildKeyringFromPriv(privKey, txConfig.Codec)
+	// --- gRPC подключение ---
+	conn, err := grpc.NewClient(
+		os.Getenv("COSMOS_GRPC_URL"),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
 
-	// --- client context ---
-	clientCtx := client.Context{}.
-		WithChainID(os.Getenv("COSMOS_CHAIN_ID")).
-		WithTxConfig(txConfig.TxConfig).
-		WithKeyring(kr).
-		WithFromName("alice").
-		WithFromAddress(fromAddr).
-		WithNodeURI(os.Getenv("COSMOS_RPC_URL")).
-		WithBroadcastMode("sync")
+	// --- получаем account number и sequence ---
+	authClient := authtypes.NewQueryClient(conn)
 
-	// --- tx factory ---
-	txFactory := tx.Factory{}.
-		WithTxConfig(txConfig.TxConfig).
-		WithChainID(os.Getenv("COSMOS_CHAIN_ID")).
-		WithGas(500000)
-
-	// --- автоматическая подпись + broadcast ---
-	err := tx.GenerateOrBroadcastTxWithFactory(
-		clientCtx,
-		txFactory,
-		msg,
+	accRes, err := authClient.Account(
+		context.Background(),
+		&authtypes.QueryAccountRequest{
+			Address: fromAddr.String(),
+		},
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("Mint tx broadcasted successfully")
+	var account authtypes.BaseAccount
+	err = account.Unmarshal(accRes.Account.Value)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	accountNumber := account.AccountNumber
+	sequence := account.Sequence
+
+	// --- encoding ---
+	txConfig := MakeEncodingConfig()
+	txBuilder := txConfig.TxConfig.NewTxBuilder()
+
+	err = txBuilder.SetMsgs(msg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	txBuilder.SetGasLimit(500000)
+
+	signMode := signingtypes.SignMode_SIGN_MODE_DIRECT
+
+	sigV2 := signingtypes.SignatureV2{
+		PubKey: privKey.PubKey(),
+		Data: &signingtypes.SingleSignatureData{
+			SignMode:  signMode,
+			Signature: nil,
+		},
+		Sequence: sequence,
+	}
+
+	err = txBuilder.SetSignatures(sigV2)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	signerData := authsigning.SignerData{
+		ChainID:       os.Getenv("COSMOS_CHAIN_ID"),
+		AccountNumber: accountNumber,
+		Sequence:      sequence,
+	}
+
+	sigV2, err = tx.SignWithPrivKey(
+		context.Background(),
+		signMode,
+		signerData,
+		txBuilder,
+		privKey,
+		txConfig.TxConfig,
+		sequence,
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = txBuilder.SetSignatures(sigV2)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// --- encode ---
+	txBytes, err := txConfig.TxConfig.TxEncoder()(txBuilder.GetTx())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// --- broadcast ---
+	txClient := txtypes.NewServiceClient(conn)
+
+	res, err := txClient.BroadcastTx(
+		context.Background(),
+		&txtypes.BroadcastTxRequest{
+			Mode:    txtypes.BroadcastMode_BROADCAST_MODE_SYNC,
+			TxBytes: txBytes,
+		},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Cosmos Tx Hash:", res.TxResponse.TxHash)
 
 }

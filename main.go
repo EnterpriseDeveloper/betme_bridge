@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	events "bridge_betme/events"
+	"bridge_betme/helper"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v5"
@@ -12,10 +13,12 @@ import (
 )
 
 func main() {
+
 	err := godotenv.Load()
 	if err != nil {
 		log.Println("No .env file found")
 	}
+	helper.Init()
 	// --- RPC server ---
 	go events.Listener()
 	// --- HTTP server ---

@@ -4,19 +4,15 @@ import (
 	"log"
 	"os"
 
-	"github.com/cosmos/cosmos-sdk/crypto/hd"
-	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/go-bip39"
-
-	"encoding/hex"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	"github.com/cosmos/cosmos-sdk/crypto/keyring"
+	"github.com/cosmos/cosmos-sdk/crypto/hd"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	"github.com/cosmos/cosmos-sdk/std"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	authtx "github.com/cosmos/cosmos-sdk/x/auth/tx"
+	"github.com/cosmos/go-bip39"
 )
 
 type EncodingConfig struct {
@@ -71,20 +67,4 @@ func MakeEncodingConfig() EncodingConfig {
 		Codec:             protoCodec,
 		TxConfig:          txConfig,
 	}
-}
-
-func BuildKeyringFromPriv(priv *secp256k1.PrivKey, cdc codec.Codec) keyring.Keyring {
-
-	kr := keyring.NewInMemory(cdc)
-
-	err := kr.ImportPrivKey(
-		"alice",
-		hex.EncodeToString(priv.Bytes()),
-		"",
-	)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return kr
 }
