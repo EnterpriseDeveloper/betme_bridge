@@ -2,16 +2,18 @@ package cosmos
 
 import (
 	helper "bridge_betme/helper"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"os"
+
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/tx"
 )
 
 func SendToCosmos(claim helper.Claim, signature []byte) {
+	privKey, fromAddr := GetCosmosRelayerAddress()
 
 	msg := &MsgMintFromEvm{
-		Creator:        cosmosRelayerAddress,
+		Creator:        fromAddr.String(),
 		EvmChainId:     claim.EvmChainId,
 		EvmBridge:      claim.EvmBridge.Hex(),
 		EvmToken:       claim.EvmToken.Hex(),
@@ -23,15 +25,36 @@ func SendToCosmos(claim helper.Claim, signature []byte) {
 		Signatures:     [][]byte{signature},
 	}
 
-	cosmosURL := os.Getenv("RELAYER_EVM_PRIVATE_KEY")
-	conn, err := grpc.NewClient(
-		cosmosURL,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+	txConfig := MakeEncodingConfig()
+	// --- создаём keyring из mnemonic ---
+	kr := BuildKeyringFromPriv(privKey, txConfig.Codec)
 
+	// --- client context ---
+	clientCtx := client.Context{}.
+		WithChainID(os.Getenv("COSMOS_CHAIN_ID")).
+		WithTxConfig(txConfig.TxConfig).
+		WithKeyring(kr).
+		WithFromName("alice").
+		WithFromAddress(fromAddr).
+		WithNodeURI(os.Getenv("COSMOS_RPC_URL")).
+		WithBroadcastMode("sync")
+
+	// --- tx factory ---
+	txFactory := tx.Factory{}.
+		WithTxConfig(txConfig.TxConfig).
+		WithChainID(os.Getenv("COSMOS_CHAIN_ID")).
+		WithGas(500000)
+
+	// --- автоматическая подпись + broadcast ---
+	err := tx.GenerateOrBroadcastTxWithFactory(
+		clientCtx,
+		txFactory,
+		msg,
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	txClient := txtypes.NewServiceClient(conn)
+	log.Println("Mint tx broadcasted successfully")
+
 }
