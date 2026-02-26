@@ -63,7 +63,7 @@ func StartCosmosListener() {
 					hash := HashBurnClaim(claim)
 
 					signature, _ := SignClaim(hash, pk)
-
+					// TODO: need test, not sure that it works
 					SendUnlockToEVM(claim, signature)
 
 				}

@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/cometbft/cometbft/types"
+	abci "github.com/cometbft/cometbft/abci/types"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )
@@ -20,7 +20,7 @@ type BurnClaim struct {
 	Nonce      int64
 }
 
-func ParseBurnEvent(event types.Event) BurnClaim {
+func ParseBurnEvent(event abci.Event) BurnClaim {
 
 	attrs := map[string]string{}
 
@@ -49,7 +49,7 @@ func HashBurnClaim(claim BurnClaim) []byte {
 	var packed []byte
 
 	// chainId (uint256)
-	chainID := new(big.Int).SetUint64(claim.EvmChainId)
+	chainID := new(big.Int).SetInt64(claim.EvmChainId)
 	packed = append(packed, common.LeftPadBytes(chainID.Bytes(), 32)...)
 
 	// bridge (address)
