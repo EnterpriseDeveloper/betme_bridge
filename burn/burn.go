@@ -17,7 +17,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func SendUnlockToEVM(claim BurnClaim, signature []byte) error {
+func SendUnlockToEVM(claim BurnClaim, signatureRel1 []byte, signatureRel2 []byte, signatureRel3 []byte) error {
 
 	client, err := ethclient.Dial(os.Getenv("RPC_WS_URL"))
 	if err != nil {
@@ -57,7 +57,7 @@ func SendUnlockToEVM(claim BurnClaim, signature []byte) error {
 	auth.GasLimit = 500000
 	auth.GasPrice = gasPrice
 
-	bridgeAddress := common.HexToAddress(os.Getenv("EVM_BRIDGE_ADDRESS"))
+	bridgeAddress := common.HexToAddress(os.Getenv("BRIDGE_ADDRESS"))
 
 	bridge, err := abi.NewERC20Bridge(bridgeAddress, client)
 	if err != nil {
@@ -75,7 +75,7 @@ func SendUnlockToEVM(claim BurnClaim, signature []byte) error {
 	tx, err := bridge.Unlock(
 		auth,
 		claimTx,
-		[][]byte{signature},
+		[][]byte{signatureRel1, signatureRel2, signatureRel3},
 	)
 	if err != nil {
 		return err

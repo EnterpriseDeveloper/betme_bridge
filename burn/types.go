@@ -2,7 +2,6 @@ package burn
 
 import (
 	"crypto/ecdsa"
-	"fmt"
 	"math/big"
 	"strconv"
 
@@ -48,45 +47,36 @@ func HashBurnClaim(claim BurnClaim) []byte {
 
 	var packed []byte
 
-	// chainId (uint256)
 	chainID := new(big.Int).SetInt64(claim.EvmChainId)
+
 	packed = append(packed, common.LeftPadBytes(chainID.Bytes(), 32)...)
-
-	// bridge (address)
 	packed = append(packed, claim.Bridge.Bytes()...)
-
-	// token (address)
 	packed = append(packed, claim.Token.Bytes()...)
-
-	// recipient (address)
 	packed = append(packed, claim.Recipient.Bytes()...)
-
-	// amount (uint256)
 	packed = append(packed, common.LeftPadBytes(claim.Amount.Bytes(), 32)...)
 
-	// nonce (uint256)
 	nonce := new(big.Int).SetInt64(claim.Nonce)
 	packed = append(packed, common.LeftPadBytes(nonce.Bytes(), 32)...)
 
 	return crypto.Keccak256(packed)
 }
 
-func SignClaim(hash []byte, privateKey *ecdsa.PrivateKey) ([]byte, error) {
+func SignClaim(hash []byte, pk *ecdsa.PrivateKey) ([]byte, error) {
 
 	ethHash := EthereumSignedHash(hash)
 
-	signature, err := crypto.Sign(ethHash, privateKey)
+	signature, err := crypto.Sign(ethHash, pk)
 	if err != nil {
 		return nil, err
 	}
 
-	// fix V value (27/28)
+	// convert v from 0/1 → 27/28
 	signature[64] += 27
 
 	return signature, nil
 }
 
 func EthereumSignedHash(hash []byte) []byte {
-	prefix := fmt.Sprintf("\x19Ethereum Signed Message:\n%d", len(hash))
-	return crypto.Keccak256([]byte(prefix), hash)
+	prefix := []byte("\x19Ethereum Signed Message:\n32")
+	return crypto.Keccak256(append(prefix, hash...))
 }

@@ -34,8 +34,20 @@ func StartCosmosListener() {
 		log.Fatal(err)
 	}
 
-	privateKeyHex := os.Getenv("RELAYER_EVM_PRIVATE_KEY")
-	pk, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyHex, "0x"))
+	privateKeyRelayer1Hex := os.Getenv("RELAYER_EVM_PRIVATE_KEY")
+	relayer1, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyRelayer1Hex, "0x"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	privateKeyRelayer2Hex := os.Getenv("RELAYER_TWO_EVM_PRIVATE_KEY")
+	relayer2, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyRelayer2Hex, "0x"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	privateKeyRelayer3Hex := os.Getenv("RELAYER_THREE_EVM_PRIVATE_KEY")
+	relayer3, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyRelayer3Hex, "0x"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -62,9 +74,11 @@ func StartCosmosListener() {
 
 					hash := HashBurnClaim(claim)
 
-					signature, _ := SignClaim(hash, pk)
+					signatureRel1, _ := SignClaim(hash, relayer1)
+					signatureRel2, _ := SignClaim(hash, relayer2)
+					signatureRel3, _ := SignClaim(hash, relayer3)
 					// TODO: need test, not sure that it works
-					SendUnlockToEVM(claim, signature)
+					SendUnlockToEVM(claim, signatureRel1, signatureRel2, signatureRel3)
 
 				}
 			}
