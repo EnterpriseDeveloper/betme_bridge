@@ -16,7 +16,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 )
 
-func SendToCosmos(claim Claim, signature []byte) {
+func SendToCosmos(claim Claim) {
 	privKey, fromAddr := GetCosmosRelayerAddress()
 
 	msg := &proto.MsgMintFromEvm{
@@ -29,7 +29,6 @@ func SendToCosmos(claim Claim, signature []byte) {
 		Amount:         claim.Amount.String(),
 		Nonce:          claim.Nonce,
 		TxHash:         claim.TxHash.Hex(),
-		Signatures:     [][]byte{signature},
 	}
 
 	conn, err := grpc.NewClient(

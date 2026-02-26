@@ -17,14 +17,14 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func SendUnlockToEVM(claim abi.ERC20BridgeClaim, signatureRel1 []byte, signatureRel2 []byte, signatureRel3 []byte) error {
+func SendUnlockToEVM(claim abi.ERC20BridgeClaim) error {
 
 	client, err := ethclient.Dial(os.Getenv("RPC_WS_URL"))
 	if err != nil {
 		return err
 	}
 
-	privateKeyHex := os.Getenv("RELAYER_EVM_PRIVATE_KEY")
+	privateKeyHex := os.Getenv("EVM_PRIVATE_KEY")
 	privateKey, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyHex, "0x"))
 	if err != nil {
 		return err
@@ -67,7 +67,7 @@ func SendUnlockToEVM(claim abi.ERC20BridgeClaim, signatureRel1 []byte, signature
 	tx, err := bridge.Unlock(
 		auth,
 		claim,
-		[][]byte{signatureRel1, signatureRel2, signatureRel3},
+		[][]byte{},
 	)
 	if err != nil {
 		return err

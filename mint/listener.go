@@ -2,7 +2,6 @@ package mint
 
 import (
 	"context"
-	"encoding/hex"
 	"fmt"
 	"log"
 	"math/big"
@@ -14,7 +13,6 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -135,26 +133,7 @@ func Listener() {
 					TxHash:         vLog.TxHash,
 				}
 
-				hash := HashClaim(claim)
-
-				log.Println("Claim hash:", common.BytesToHash(hash).Hex())
-
-				// ---- SIGN ----
-
-				privateKeyHex := os.Getenv("RELAYER_EVM_PRIVATE_KEY")
-				pk, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyHex, "0x"))
-				if err != nil {
-					log.Fatal(err)
-				}
-
-				signature, err := SignClaim(hash, pk)
-				if err != nil {
-					log.Fatal(err)
-				}
-
-				log.Println("Signature:", hex.EncodeToString(signature))
-
-				SendToCosmos(claim, signature)
+				SendToCosmos(claim)
 
 			}
 		}
