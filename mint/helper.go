@@ -1,4 +1,4 @@
-package cosmos
+package mint
 
 import (
 	proto "bridge_betme/proto"

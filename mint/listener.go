@@ -1,4 +1,4 @@
-package evm
+package mint
 
 import (
 	"context"
@@ -9,9 +9,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
-	cosmos "bridge_betme/cosmos"
-	helper "bridge_betme/helper"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -127,7 +124,7 @@ func Listener() {
 					log.Println("parse EVM_CHAIN_ID:", err)
 				}
 
-				claim := helper.Claim{
+				claim := Claim{
 					EvmChainId:     evmChainIDnum, // Polygon Amoy
 					EvmBridge:      bridgeAddr,
 					EvmToken:       token,
@@ -138,7 +135,7 @@ func Listener() {
 					TxHash:         vLog.TxHash,
 				}
 
-				hash := helper.HashClaim(claim)
+				hash := HashClaim(claim)
 
 				log.Println("Claim hash:", common.BytesToHash(hash).Hex())
 
@@ -150,14 +147,14 @@ func Listener() {
 					log.Fatal(err)
 				}
 
-				signature, err := helper.SignClaim(hash, pk)
+				signature, err := SignClaim(hash, pk)
 				if err != nil {
 					log.Fatal(err)
 				}
 
 				log.Println("Signature:", hex.EncodeToString(signature))
 
-				cosmos.SendToCosmos(claim, signature)
+				SendToCosmos(claim, signature)
 
 			}
 		}

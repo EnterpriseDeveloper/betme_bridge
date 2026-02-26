@@ -1,13 +1,15 @@
-package cosmos
+package burn
 
 import (
 	"context"
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	rpchttp "github.com/cometbft/cometbft/rpc/client/http"
 	"github.com/cometbft/cometbft/types"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 func StartCosmosListener() {
@@ -32,6 +34,12 @@ func StartCosmosListener() {
 		log.Fatal(err)
 	}
 
+	privateKeyHex := os.Getenv("RELAYER_EVM_PRIVATE_KEY")
+	pk, err := crypto.HexToECDSA(strings.TrimPrefix(privateKeyHex, "0x"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	go func() {
 		for msg := range sub {
 
@@ -49,6 +57,15 @@ func StartCosmosListener() {
 							attr.Value,
 						)
 					}
+
+					claim := ParseBurnEvent(event)
+
+					hash := HashBurnClaim(claim)
+
+					signature, _ := SignClaim(hash, pk)
+
+					SendUnlockToEVM(claim, signature)
+
 				}
 			}
 		}

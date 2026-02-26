@@ -1,4 +1,4 @@
-package helper
+package mint
 
 import (
 	"crypto/ecdsa"

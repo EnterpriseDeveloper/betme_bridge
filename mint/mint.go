@@ -1,7 +1,6 @@
-package cosmos
+package mint
 
 import (
-	helper "bridge_betme/helper"
 	proto "bridge_betme/proto"
 	"context"
 	"log"
@@ -17,7 +16,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 )
 
-func SendToCosmos(claim helper.Claim, signature []byte) {
+func SendToCosmos(claim Claim, signature []byte) {
 	privKey, fromAddr := GetCosmosRelayerAddress()
 
 	msg := &proto.MsgMintFromEvm{
