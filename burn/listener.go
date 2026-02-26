@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 
+	"encoding/hex"
+
 	rpchttp "github.com/cometbft/cometbft/rpc/client/http"
 	"github.com/cometbft/cometbft/types"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -77,6 +79,12 @@ func StartCosmosListener() {
 					signatureRel1, _ := SignClaim(hash, relayer1)
 					signatureRel2, _ := SignClaim(hash, relayer2)
 					signatureRel3, _ := SignClaim(hash, relayer3)
+
+					log.Println("Hash:", hex.EncodeToString(hash))
+					log.Println("Relayer 1:", crypto.PubkeyToAddress(relayer1.PublicKey).Hex())
+					log.Println("Relayer 2:", crypto.PubkeyToAddress(relayer2.PublicKey).Hex())
+					log.Println("Relayer 3:", crypto.PubkeyToAddress(relayer3.PublicKey).Hex())
+
 					// TODO: need test, not sure that it works
 					SendUnlockToEVM(claim, signatureRel1, signatureRel2, signatureRel3)
 

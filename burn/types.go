@@ -1,6 +1,7 @@
 package burn
 
 import (
+	abi "bridge_betme/abi"
 	"crypto/ecdsa"
 	"math/big"
 	"strconv"
@@ -10,16 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-type BurnClaim struct {
-	EvmChainId int64
-	Bridge     common.Address
-	Token      common.Address
-	Recipient  common.Address
-	Amount     *big.Int
-	Nonce      int64
-}
-
-func ParseBurnEvent(event abci.Event) BurnClaim {
+func ParseBurnEvent(event abci.Event) abi.ERC20BridgeClaim {
 
 	attrs := map[string]string{}
 
@@ -33,39 +25,34 @@ func ParseBurnEvent(event abci.Event) BurnClaim {
 	amount := new(big.Int)
 	amount.SetString(attrs["amount"], 10)
 
-	return BurnClaim{
-		EvmChainId: chainID,
-		Bridge:     common.HexToAddress(attrs["bridge"]),
+	return abi.ERC20BridgeClaim{
+		EvmChainId: big.NewInt(chainID),
 		Token:      common.HexToAddress(attrs["token"]),
-		Recipient:  common.HexToAddress(attrs["recipient"]),
+		To:         common.HexToAddress(attrs["recipient"]),
 		Amount:     amount,
-		Nonce:      nonce,
+		Nonce:      big.NewInt(nonce),
 	}
 }
 
-func HashBurnClaim(claim BurnClaim) []byte {
+func HashBurnClaim(claim abi.ERC20BridgeClaim) []byte {
 
 	var packed []byte
-
-	chainID := new(big.Int).SetInt64(claim.EvmChainId)
-
-	packed = append(packed, common.LeftPadBytes(chainID.Bytes(), 32)...)
-	packed = append(packed, claim.Bridge.Bytes()...)
+	packed = append(packed, common.LeftPadBytes(claim.EvmChainId.Bytes(), 32)...)
 	packed = append(packed, claim.Token.Bytes()...)
-	packed = append(packed, claim.Recipient.Bytes()...)
+	packed = append(packed, claim.To.Bytes()...)
 	packed = append(packed, common.LeftPadBytes(claim.Amount.Bytes(), 32)...)
-
-	nonce := new(big.Int).SetInt64(claim.Nonce)
-	packed = append(packed, common.LeftPadBytes(nonce.Bytes(), 32)...)
+	packed = append(packed, common.LeftPadBytes(claim.Nonce.Bytes(), 32)...)
 
 	return crypto.Keccak256(packed)
 }
 
 func SignClaim(hash []byte, pk *ecdsa.PrivateKey) ([]byte, error) {
+	prefixedHash := crypto.Keccak256(
+		[]byte("\x19Ethereum Signed Message:\n32"),
+		hash,
+	)
 
-	ethHash := EthereumSignedHash(hash)
-
-	signature, err := crypto.Sign(ethHash, pk)
+	signature, err := crypto.Sign(prefixedHash, pk)
 	if err != nil {
 		return nil, err
 	}
@@ -74,9 +61,4 @@ func SignClaim(hash []byte, pk *ecdsa.PrivateKey) ([]byte, error) {
 	signature[64] += 27
 
 	return signature, nil
-}
-
-func EthereumSignedHash(hash []byte) []byte {
-	prefix := []byte("\x19Ethereum Signed Message:\n32")
-	return crypto.Keccak256(append(prefix, hash...))
 }

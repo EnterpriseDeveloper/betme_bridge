@@ -17,7 +17,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func SendUnlockToEVM(claim BurnClaim, signatureRel1 []byte, signatureRel2 []byte, signatureRel3 []byte) error {
+func SendUnlockToEVM(claim abi.ERC20BridgeClaim, signatureRel1 []byte, signatureRel2 []byte, signatureRel3 []byte) error {
 
 	client, err := ethclient.Dial(os.Getenv("RPC_WS_URL"))
 	if err != nil {
@@ -64,17 +64,9 @@ func SendUnlockToEVM(claim BurnClaim, signatureRel1 []byte, signatureRel2 []byte
 		return err
 	}
 
-	claimTx := abi.ERC20BridgeClaim{
-		EvmChainId: big.NewInt(claim.EvmChainId),
-		Token:      claim.Token,
-		To:         claim.Recipient,
-		Amount:     claim.Amount,
-		Nonce:      big.NewInt(claim.Nonce),
-	}
-
 	tx, err := bridge.Unlock(
 		auth,
-		claimTx,
+		claim,
 		[][]byte{signatureRel1, signatureRel2, signatureRel3},
 	)
 	if err != nil {
