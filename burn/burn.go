@@ -18,6 +18,7 @@ import (
 )
 
 func SendUnlockToEVM(claim abi.ERC20BridgeClaim) error {
+	fmt.Println("Start sending unlock to EVM...")
 
 	client, err := ethclient.Dial(os.Getenv("RPC_WS_URL"))
 	if err != nil {
@@ -64,10 +65,12 @@ func SendUnlockToEVM(claim abi.ERC20BridgeClaim) error {
 		return err
 	}
 
+	fmt.Println("amount: " + claim.Amount.String())
+	fmt.Println("roken: " + claim.Token.String())
+
 	tx, err := bridge.Unlock(
 		auth,
 		claim,
-		[][]byte{},
 	)
 	if err != nil {
 		return err

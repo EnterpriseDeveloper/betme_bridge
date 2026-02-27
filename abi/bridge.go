@@ -40,7 +40,7 @@ type ERC20BridgeClaim struct {
 
 // ERC20BridgeMetaData contains all meta data concerning the ERC20Bridge contract.
 var ERC20BridgeMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"_threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"addRelayer\",\"inputs\":[{\"name\":\"relayer\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"chainId\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getMessageHash\",\"inputs\":[{\"name\":\"claim\",\"type\":\"tuple\",\"internalType\":\"structERC20Bridge.Claim\",\"components\":[{\"name\":\"evmChainId\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"pure\"},{\"type\":\"function\",\"name\":\"lock\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"cosmosRecipient\",\"type\":\"string\",\"internalType\":\"string\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"lockNonce\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"owner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"pause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"paused\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"processedUnlockNonces\",\"inputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"relayers\",\"inputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"removeRelayer\",\"inputs\":[{\"name\":\"relayer\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"renounceOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setSupportedToken\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"status\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setThreshold\",\"inputs\":[{\"name\":\"_threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"supportedTokens\",\"inputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"threshold\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"transferOwnership\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"unlock\",\"inputs\":[{\"name\":\"claim\",\"type\":\"tuple\",\"internalType\":\"structERC20Bridge.Claim\",\"components\":[{\"name\":\"evmChainId\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"signatures\",\"type\":\"bytes[]\",\"internalType\":\"bytes[]\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"unlockNonce\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"unpause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"event\",\"name\":\"Locked\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"sender\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"cosmosRecipient\",\"type\":\"string\",\"indexed\":false,\"internalType\":\"string\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferred\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Paused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Unlocked\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Unpaused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"EnforcedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ExpectedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OwnableInvalidOwner\",\"inputs\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"OwnableUnauthorizedAccount\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ReentrancyGuardReentrantCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"SafeERC20FailedOperation\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"}]}]",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"chainId\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"lock\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"cosmosRecipient\",\"type\":\"string\",\"internalType\":\"string\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"lockNonce\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"lockedAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"owner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"pause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"paused\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"processedUnlockNonces\",\"inputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"renounceOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setSupportedToken\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"status\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"supportedTokens\",\"inputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"transferOwnership\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"unlock\",\"inputs\":[{\"name\":\"claim\",\"type\":\"tuple\",\"internalType\":\"structERC20Bridge.Claim\",\"components\":[{\"name\":\"evmChainId\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"unlockNonce\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"unlockedAmount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"unpause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"event\",\"name\":\"Locked\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"sender\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"cosmosRecipient\",\"type\":\"string\",\"indexed\":false,\"internalType\":\"string\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferred\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Paused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Unlocked\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Unpaused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"EnforcedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ExpectedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OwnableInvalidOwner\",\"inputs\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"OwnableUnauthorizedAccount\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ReentrancyGuardReentrantCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"SafeERC20FailedOperation\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"}]}]",
 }
 
 // ERC20BridgeABI is the input ABI used to generate the binding from.
@@ -220,37 +220,6 @@ func (_ERC20Bridge *ERC20BridgeCallerSession) ChainId() (*big.Int, error) {
 	return _ERC20Bridge.Contract.ChainId(&_ERC20Bridge.CallOpts)
 }
 
-// GetMessageHash is a free data retrieval call binding the contract method 0x64770b8f.
-//
-// Solidity: function getMessageHash((uint256,address,address,uint256,uint256) claim) pure returns(bytes32)
-func (_ERC20Bridge *ERC20BridgeCaller) GetMessageHash(opts *bind.CallOpts, claim ERC20BridgeClaim) ([32]byte, error) {
-	var out []interface{}
-	err := _ERC20Bridge.contract.Call(opts, &out, "getMessageHash", claim)
-
-	if err != nil {
-		return *new([32]byte), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
-
-	return out0, err
-
-}
-
-// GetMessageHash is a free data retrieval call binding the contract method 0x64770b8f.
-//
-// Solidity: function getMessageHash((uint256,address,address,uint256,uint256) claim) pure returns(bytes32)
-func (_ERC20Bridge *ERC20BridgeSession) GetMessageHash(claim ERC20BridgeClaim) ([32]byte, error) {
-	return _ERC20Bridge.Contract.GetMessageHash(&_ERC20Bridge.CallOpts, claim)
-}
-
-// GetMessageHash is a free data retrieval call binding the contract method 0x64770b8f.
-//
-// Solidity: function getMessageHash((uint256,address,address,uint256,uint256) claim) pure returns(bytes32)
-func (_ERC20Bridge *ERC20BridgeCallerSession) GetMessageHash(claim ERC20BridgeClaim) ([32]byte, error) {
-	return _ERC20Bridge.Contract.GetMessageHash(&_ERC20Bridge.CallOpts, claim)
-}
-
 // LockNonce is a free data retrieval call binding the contract method 0xb5a9096e.
 //
 // Solidity: function lockNonce() view returns(uint256)
@@ -280,6 +249,37 @@ func (_ERC20Bridge *ERC20BridgeSession) LockNonce() (*big.Int, error) {
 // Solidity: function lockNonce() view returns(uint256)
 func (_ERC20Bridge *ERC20BridgeCallerSession) LockNonce() (*big.Int, error) {
 	return _ERC20Bridge.Contract.LockNonce(&_ERC20Bridge.CallOpts)
+}
+
+// LockedAmount is a free data retrieval call binding the contract method 0x6ab28bc8.
+//
+// Solidity: function lockedAmount() view returns(uint256)
+func (_ERC20Bridge *ERC20BridgeCaller) LockedAmount(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _ERC20Bridge.contract.Call(opts, &out, "lockedAmount")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// LockedAmount is a free data retrieval call binding the contract method 0x6ab28bc8.
+//
+// Solidity: function lockedAmount() view returns(uint256)
+func (_ERC20Bridge *ERC20BridgeSession) LockedAmount() (*big.Int, error) {
+	return _ERC20Bridge.Contract.LockedAmount(&_ERC20Bridge.CallOpts)
+}
+
+// LockedAmount is a free data retrieval call binding the contract method 0x6ab28bc8.
+//
+// Solidity: function lockedAmount() view returns(uint256)
+func (_ERC20Bridge *ERC20BridgeCallerSession) LockedAmount() (*big.Int, error) {
+	return _ERC20Bridge.Contract.LockedAmount(&_ERC20Bridge.CallOpts)
 }
 
 // Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
@@ -375,37 +375,6 @@ func (_ERC20Bridge *ERC20BridgeCallerSession) ProcessedUnlockNonces(arg0 *big.In
 	return _ERC20Bridge.Contract.ProcessedUnlockNonces(&_ERC20Bridge.CallOpts, arg0)
 }
 
-// Relayers is a free data retrieval call binding the contract method 0x5300f841.
-//
-// Solidity: function relayers(address ) view returns(bool)
-func (_ERC20Bridge *ERC20BridgeCaller) Relayers(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
-	var out []interface{}
-	err := _ERC20Bridge.contract.Call(opts, &out, "relayers", arg0)
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// Relayers is a free data retrieval call binding the contract method 0x5300f841.
-//
-// Solidity: function relayers(address ) view returns(bool)
-func (_ERC20Bridge *ERC20BridgeSession) Relayers(arg0 common.Address) (bool, error) {
-	return _ERC20Bridge.Contract.Relayers(&_ERC20Bridge.CallOpts, arg0)
-}
-
-// Relayers is a free data retrieval call binding the contract method 0x5300f841.
-//
-// Solidity: function relayers(address ) view returns(bool)
-func (_ERC20Bridge *ERC20BridgeCallerSession) Relayers(arg0 common.Address) (bool, error) {
-	return _ERC20Bridge.Contract.Relayers(&_ERC20Bridge.CallOpts, arg0)
-}
-
 // SupportedTokens is a free data retrieval call binding the contract method 0x68c4ac26.
 //
 // Solidity: function supportedTokens(address ) view returns(bool)
@@ -435,37 +404,6 @@ func (_ERC20Bridge *ERC20BridgeSession) SupportedTokens(arg0 common.Address) (bo
 // Solidity: function supportedTokens(address ) view returns(bool)
 func (_ERC20Bridge *ERC20BridgeCallerSession) SupportedTokens(arg0 common.Address) (bool, error) {
 	return _ERC20Bridge.Contract.SupportedTokens(&_ERC20Bridge.CallOpts, arg0)
-}
-
-// Threshold is a free data retrieval call binding the contract method 0x42cde4e8.
-//
-// Solidity: function threshold() view returns(uint256)
-func (_ERC20Bridge *ERC20BridgeCaller) Threshold(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _ERC20Bridge.contract.Call(opts, &out, "threshold")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// Threshold is a free data retrieval call binding the contract method 0x42cde4e8.
-//
-// Solidity: function threshold() view returns(uint256)
-func (_ERC20Bridge *ERC20BridgeSession) Threshold() (*big.Int, error) {
-	return _ERC20Bridge.Contract.Threshold(&_ERC20Bridge.CallOpts)
-}
-
-// Threshold is a free data retrieval call binding the contract method 0x42cde4e8.
-//
-// Solidity: function threshold() view returns(uint256)
-func (_ERC20Bridge *ERC20BridgeCallerSession) Threshold() (*big.Int, error) {
-	return _ERC20Bridge.Contract.Threshold(&_ERC20Bridge.CallOpts)
 }
 
 // UnlockNonce is a free data retrieval call binding the contract method 0xdd926714.
@@ -499,25 +437,35 @@ func (_ERC20Bridge *ERC20BridgeCallerSession) UnlockNonce() (*big.Int, error) {
 	return _ERC20Bridge.Contract.UnlockNonce(&_ERC20Bridge.CallOpts)
 }
 
-// AddRelayer is a paid mutator transaction binding the contract method 0xdd39f00d.
+// UnlockedAmount is a free data retrieval call binding the contract method 0x4dfefebc.
 //
-// Solidity: function addRelayer(address relayer) returns()
-func (_ERC20Bridge *ERC20BridgeTransactor) AddRelayer(opts *bind.TransactOpts, relayer common.Address) (*types.Transaction, error) {
-	return _ERC20Bridge.contract.Transact(opts, "addRelayer", relayer)
+// Solidity: function unlockedAmount() view returns(uint256)
+func (_ERC20Bridge *ERC20BridgeCaller) UnlockedAmount(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _ERC20Bridge.contract.Call(opts, &out, "unlockedAmount")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
 }
 
-// AddRelayer is a paid mutator transaction binding the contract method 0xdd39f00d.
+// UnlockedAmount is a free data retrieval call binding the contract method 0x4dfefebc.
 //
-// Solidity: function addRelayer(address relayer) returns()
-func (_ERC20Bridge *ERC20BridgeSession) AddRelayer(relayer common.Address) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.AddRelayer(&_ERC20Bridge.TransactOpts, relayer)
+// Solidity: function unlockedAmount() view returns(uint256)
+func (_ERC20Bridge *ERC20BridgeSession) UnlockedAmount() (*big.Int, error) {
+	return _ERC20Bridge.Contract.UnlockedAmount(&_ERC20Bridge.CallOpts)
 }
 
-// AddRelayer is a paid mutator transaction binding the contract method 0xdd39f00d.
+// UnlockedAmount is a free data retrieval call binding the contract method 0x4dfefebc.
 //
-// Solidity: function addRelayer(address relayer) returns()
-func (_ERC20Bridge *ERC20BridgeTransactorSession) AddRelayer(relayer common.Address) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.AddRelayer(&_ERC20Bridge.TransactOpts, relayer)
+// Solidity: function unlockedAmount() view returns(uint256)
+func (_ERC20Bridge *ERC20BridgeCallerSession) UnlockedAmount() (*big.Int, error) {
+	return _ERC20Bridge.Contract.UnlockedAmount(&_ERC20Bridge.CallOpts)
 }
 
 // Lock is a paid mutator transaction binding the contract method 0xc267ce5f.
@@ -562,27 +510,6 @@ func (_ERC20Bridge *ERC20BridgeTransactorSession) Pause() (*types.Transaction, e
 	return _ERC20Bridge.Contract.Pause(&_ERC20Bridge.TransactOpts)
 }
 
-// RemoveRelayer is a paid mutator transaction binding the contract method 0x60f0a5ac.
-//
-// Solidity: function removeRelayer(address relayer) returns()
-func (_ERC20Bridge *ERC20BridgeTransactor) RemoveRelayer(opts *bind.TransactOpts, relayer common.Address) (*types.Transaction, error) {
-	return _ERC20Bridge.contract.Transact(opts, "removeRelayer", relayer)
-}
-
-// RemoveRelayer is a paid mutator transaction binding the contract method 0x60f0a5ac.
-//
-// Solidity: function removeRelayer(address relayer) returns()
-func (_ERC20Bridge *ERC20BridgeSession) RemoveRelayer(relayer common.Address) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.RemoveRelayer(&_ERC20Bridge.TransactOpts, relayer)
-}
-
-// RemoveRelayer is a paid mutator transaction binding the contract method 0x60f0a5ac.
-//
-// Solidity: function removeRelayer(address relayer) returns()
-func (_ERC20Bridge *ERC20BridgeTransactorSession) RemoveRelayer(relayer common.Address) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.RemoveRelayer(&_ERC20Bridge.TransactOpts, relayer)
-}
-
 // RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
 //
 // Solidity: function renounceOwnership() returns()
@@ -625,27 +552,6 @@ func (_ERC20Bridge *ERC20BridgeTransactorSession) SetSupportedToken(token common
 	return _ERC20Bridge.Contract.SetSupportedToken(&_ERC20Bridge.TransactOpts, token, status)
 }
 
-// SetThreshold is a paid mutator transaction binding the contract method 0x960bfe04.
-//
-// Solidity: function setThreshold(uint256 _threshold) returns()
-func (_ERC20Bridge *ERC20BridgeTransactor) SetThreshold(opts *bind.TransactOpts, _threshold *big.Int) (*types.Transaction, error) {
-	return _ERC20Bridge.contract.Transact(opts, "setThreshold", _threshold)
-}
-
-// SetThreshold is a paid mutator transaction binding the contract method 0x960bfe04.
-//
-// Solidity: function setThreshold(uint256 _threshold) returns()
-func (_ERC20Bridge *ERC20BridgeSession) SetThreshold(_threshold *big.Int) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.SetThreshold(&_ERC20Bridge.TransactOpts, _threshold)
-}
-
-// SetThreshold is a paid mutator transaction binding the contract method 0x960bfe04.
-//
-// Solidity: function setThreshold(uint256 _threshold) returns()
-func (_ERC20Bridge *ERC20BridgeTransactorSession) SetThreshold(_threshold *big.Int) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.SetThreshold(&_ERC20Bridge.TransactOpts, _threshold)
-}
-
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
 //
 // Solidity: function transferOwnership(address newOwner) returns()
@@ -667,25 +573,25 @@ func (_ERC20Bridge *ERC20BridgeTransactorSession) TransferOwnership(newOwner com
 	return _ERC20Bridge.Contract.TransferOwnership(&_ERC20Bridge.TransactOpts, newOwner)
 }
 
-// Unlock is a paid mutator transaction binding the contract method 0x870ea9ff.
+// Unlock is a paid mutator transaction binding the contract method 0xf45a12ac.
 //
-// Solidity: function unlock((uint256,address,address,uint256,uint256) claim, bytes[] signatures) returns()
-func (_ERC20Bridge *ERC20BridgeTransactor) Unlock(opts *bind.TransactOpts, claim ERC20BridgeClaim, signatures [][]byte) (*types.Transaction, error) {
-	return _ERC20Bridge.contract.Transact(opts, "unlock", claim, signatures)
+// Solidity: function unlock((uint256,address,address,uint256,uint256) claim) returns()
+func (_ERC20Bridge *ERC20BridgeTransactor) Unlock(opts *bind.TransactOpts, claim ERC20BridgeClaim) (*types.Transaction, error) {
+	return _ERC20Bridge.contract.Transact(opts, "unlock", claim)
 }
 
-// Unlock is a paid mutator transaction binding the contract method 0x870ea9ff.
+// Unlock is a paid mutator transaction binding the contract method 0xf45a12ac.
 //
-// Solidity: function unlock((uint256,address,address,uint256,uint256) claim, bytes[] signatures) returns()
-func (_ERC20Bridge *ERC20BridgeSession) Unlock(claim ERC20BridgeClaim, signatures [][]byte) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.Unlock(&_ERC20Bridge.TransactOpts, claim, signatures)
+// Solidity: function unlock((uint256,address,address,uint256,uint256) claim) returns()
+func (_ERC20Bridge *ERC20BridgeSession) Unlock(claim ERC20BridgeClaim) (*types.Transaction, error) {
+	return _ERC20Bridge.Contract.Unlock(&_ERC20Bridge.TransactOpts, claim)
 }
 
-// Unlock is a paid mutator transaction binding the contract method 0x870ea9ff.
+// Unlock is a paid mutator transaction binding the contract method 0xf45a12ac.
 //
-// Solidity: function unlock((uint256,address,address,uint256,uint256) claim, bytes[] signatures) returns()
-func (_ERC20Bridge *ERC20BridgeTransactorSession) Unlock(claim ERC20BridgeClaim, signatures [][]byte) (*types.Transaction, error) {
-	return _ERC20Bridge.Contract.Unlock(&_ERC20Bridge.TransactOpts, claim, signatures)
+// Solidity: function unlock((uint256,address,address,uint256,uint256) claim) returns()
+func (_ERC20Bridge *ERC20BridgeTransactorSession) Unlock(claim ERC20BridgeClaim) (*types.Transaction, error) {
+	return _ERC20Bridge.Contract.Unlock(&_ERC20Bridge.TransactOpts, claim)
 }
 
 // Unpause is a paid mutator transaction binding the contract method 0x3f4ba83a.
