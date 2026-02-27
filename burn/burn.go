@@ -65,9 +65,6 @@ func SendUnlockToEVM(claim abi.ERC20BridgeClaim) error {
 		return err
 	}
 
-	fmt.Println("amount: " + claim.Amount.String())
-	fmt.Println("roken: " + claim.Token.String())
-
 	tx, err := bridge.Unlock(
 		auth,
 		claim,
