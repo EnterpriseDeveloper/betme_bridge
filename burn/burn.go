@@ -55,8 +55,8 @@ func SendUnlockToEVM(claim abi.ERC20BridgeClaim) error {
 
 	auth.Nonce = big.NewInt(int64(nonce))
 	auth.Value = big.NewInt(0)
-	auth.GasLimit = 500000
-	auth.GasPrice = gasPrice
+	auth.GasLimit = 500000   // TODO: change it FOR PRODUCTION
+	auth.GasPrice = gasPrice // TODO: change it FOR PRODUCTION
 
 	bridgeAddress := common.HexToAddress(os.Getenv("BRIDGE_ADDRESS"))
 

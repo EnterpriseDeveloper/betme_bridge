@@ -21,7 +21,7 @@ func ParseBurnEvent(event abci.Event) abi.ERC20BridgeClaim {
 	nonce, _ := strconv.ParseInt(attrs["nonce"], 10, 64)
 
 	amount := new(big.Int)
-	amount.SetString(attrs["amount"], 10)
+	amount.SetString(attrs["transfer_amount"], 10)
 
 	return abi.ERC20BridgeClaim{
 		EvmChainId: big.NewInt(chainID),

@@ -52,7 +52,6 @@ func StartCosmosListener() {
 
 					claim := ParseBurnEvent(event)
 
-					// TODO: need test, not sure that it works
 					err := SendUnlockToEVM(claim)
 					if err != nil {
 						log.Fatal(err)
