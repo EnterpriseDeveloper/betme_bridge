@@ -23,7 +23,7 @@ func StartCosmosListener() {
 		log.Fatal(err)
 	}
 
-	query := "tm.event='Tx' AND burn_to_evm.nonce EXISTS"
+	query := "tm.event='Tx' AND BURN_TO_EVM.nonce EXISTS"
 
 	ctx := context.Background()
 
@@ -41,7 +41,7 @@ func StartCosmosListener() {
 
 			for _, event := range txResult.Result.Events {
 
-				if event.Type == "burn_to_evm" {
+				if event.Type == "BURN_TO_EVM" {
 
 					for _, attr := range event.Attributes {
 						log.Printf("%s: %s\n",
@@ -54,7 +54,7 @@ func StartCosmosListener() {
 
 					err := SendUnlockToEVM(claim)
 					if err != nil {
-						log.Fatal(err)
+						log.Println("error sending unlock to EVM:", err)
 					}
 
 				}
